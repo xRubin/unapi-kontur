@@ -4,40 +4,41 @@
 
 Являтся частью библиотеки [Unapi](https://github.com/xRubin/unapi)
 
-Для прохождения капчи нужен любой модуль, реализующий **unapi\anticaptcha\common\AnticaptchaInterface**, например [Unapi Antigate](https://github.com/xRubin/unapi-anticaptcha-antigate)
-
-### Подключение к сервису поиска документов для государственной регистрации
+### Подключение к Api сервиса контур.призма
 ```php
-use unapi\fns\common\Anticaptcha;
-use unapi\fns\uwsfind\Service;
+use unapi\kontur\prism\api\Service;
 
-$service = new Service([
-  'anticaptcha' => new Anticaptcha(new AntigateService([...]),
-]);
+$service = new Service();
 ```
 
-### Поиск документов по юридическому лицу
+### Аутентификация
+Для получения ключей доступа требуется заключить договор.
 
 ```php
-use unapi\fns\uwsfind\Declaration;
-use unapi\fns\uwsfind\requests;
+use unapi\kontur\prism\api\Credentials;
 
-/** @var Declaration[] $declarations */
-$declarations = $service->findDeclarations(
-  new requests\ByLegalRequest('1027700070518')
-)->wait();
+$credentials = new Credentials('example@example.com', 'password', '31e94610-021a-42e2-b71d-3cf8250e4571', '4d529cb4-757f-be41-834f-c35af2d7e1d1');
+$service->auth($credentials);
 ```
 
-### Поиск документов об индивидуальном предпринимателе
+### Статистика по API ключу
 
 ```php
-use unapi\fns\uwsfind\Declaration;
-use unapi\fns\uwsfind\requests;
+use unapi\kontur\prism\api\responses;
 
-/** @var Declaration[] $declarations */
-$declarations = $service->findDeclarations(
-  new requests\BySoleProprietorRequest('312504026800041')
-)->wait();
+/** @var responses\ApiKeysResponseInterface $result */
+$result = $service->auth($credentials)->then(function (Credentials $credentials) use ($service) {
+    return $service->getApiKeys($credentials);
+})->wait();
 ```
 
-Дополнительно в конструктор запроса могут передаваться форма документа, ИФНС, период поиска.
+### Получение текущего аутентифицированного пользователя
+
+```php
+use unapi\kontur\prism\api\responses;
+
+/** @var responses\AuthUserResponseInterface $result */
+$result = $service->auth($credentials)->then(function (Credentials $credentials) use ($service) {
+    return $service->getAuthUser($credentials);
+})->wait();
+```
