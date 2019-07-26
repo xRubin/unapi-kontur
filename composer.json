@@ -1,7 +1,7 @@
 {
   "name": "unapi/kontur",
   "description": "Unapi https://kontur.ru services wrapper",
-  "keywords": ["unapi", "guzzle", "promise", "kontur", "kontur.ru", "kyc"],
+  "keywords": ["unapi", "guzzle", "promise", "kontur", "kontur.ru", "kyc", "prism", "контур.призма"],
   "type": "library",
   "minimum-stability": "stable",
   "require": {

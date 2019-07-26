@@ -4,7 +4,6 @@ namespace unapi\kontur\prism\api;
 
 class Client extends \GuzzleHttp\Client
 {
-
     /**
      * @param array $config
      */
