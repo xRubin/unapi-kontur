@@ -6,9 +6,9 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 
+use unapi\kontur\prism\common\Credentials;
 use unapi\kontur\prism\api\ {
     Client,
-    Credentials,
     Service,
     responses
 };

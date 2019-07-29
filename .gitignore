@@ -1,4 +1,5 @@
 composer.phar
 composer.lock
 /vendor
-/tests/HiddenTest.php
+/tests/HiddenApiTest.php
+/tests/HiddenWebTest.php

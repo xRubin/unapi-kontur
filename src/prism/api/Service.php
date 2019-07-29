@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use unapi\interfaces\ServiceInterface;
 use unapi\kontur\prism\api\responses\AuthResponseInterface;
+use unapi\kontur\prism\common\CredentialsInterface;
 
 class Service implements ServiceInterface, LoggerAwareInterface
 {
