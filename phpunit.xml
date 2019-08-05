@@ -5,8 +5,11 @@
         bootstrap="vendor/autoload.php"
         colors="true">
     <testsuites>
-        <testsuite name="prism-api">
-            <directory suffix="Test.php">tests/prism/api</directory>
+        <testsuite name="focus">
+            <directory suffix="Test.php">tests/focus</directory>
+        </testsuite>
+        <testsuite name="prism">
+            <directory suffix="Test.php">tests/prism</directory>
         </testsuite>
     </testsuites>
 
