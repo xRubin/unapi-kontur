@@ -1,5 +1,7 @@
 <?php
 
+namespace tests\focus;
+
 use PHPUnit\Framework\TestCase;
 
 use GuzzleHttp\HandlerStack;

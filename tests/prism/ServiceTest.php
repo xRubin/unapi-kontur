@@ -1,5 +1,7 @@
 <?php
 
+namespace tests\prism;
+
 use PHPUnit\Framework\TestCase;
 
 use GuzzleHttp\HandlerStack;
