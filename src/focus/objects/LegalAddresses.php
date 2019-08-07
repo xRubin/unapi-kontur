@@ -12,7 +12,7 @@ class LegalAddresses implements \IteratorAggregate, DtoInterface
 
     /**
      * LegalAddresses constructor.
-     * @param LegalAddresses[] $list
+     * @param LegalAddress[] $list
      */
     public function __construct(array $list)
     {

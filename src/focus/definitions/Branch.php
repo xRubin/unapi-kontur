@@ -6,40 +6,49 @@ use unapi\interfaces\DtoInterface;
 
 class Branch implements DtoInterface
 {
-    /** @var string */
+    /** @var string|null */
     private $name;
     /** @var ParsedAddressRF|null */
     private $parsedAddressRF;
     /** @var ForeignAddress|null */
     private $foreignAddress;
-    /** @var \DateTimeInterface */
+    /** @var \DateTimeInterface|null */
     private $date;
 
     /**
-     * Branch constructor.
-     * @param string $name
-     * @param \DateTimeInterface $date
+     * @return null|string
      */
-    public function __construct(string $name, \DateTimeInterface $date)
-    {
-        $this->name = $name;
-        $this->date = $date;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
-     * @return \DateTimeInterface
+     * @param null|string $name
+     * @return Branch
      */
-    public function getDate(): \DateTimeInterface
+    public function setName(?string $name): Branch
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getDate(): ?\DateTimeInterface
     {
         return $this->date;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $date
+     * @return Branch
+     */
+    public function setDate(?\DateTimeInterface $date): Branch
+    {
+        $this->date = $date;
+        return $this;
     }
 
     /**
@@ -84,10 +93,13 @@ class Branch implements DtoInterface
      */
     public static function toDto(array $data): DtoInterface
     {
-        $result = new self(
-            (string)$data['name'],
-            \DateTimeImmutable::createFromFormat('Y-m-d', $data['date'])
-        );
+        $result = new self();
+
+        if (array_key_exists('name', $data))
+            $result->setName($data['name']);
+
+        if (array_key_exists('date', $data))
+            $result->setDate(\DateTimeImmutable::createFromFormat('Y-m-d', $data['date']));
 
         if (array_key_exists('parsedAddressRF', $data))
             $result->setParsedAddressRF(ParsedAddressRF::toDto($data['parsedAddressRF']));

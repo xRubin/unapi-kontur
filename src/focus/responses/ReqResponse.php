@@ -19,9 +19,11 @@ class ReqResponse implements ReqResponseInterface
         $this->list = $list;
     }
 
-    public function getIterator() {
+    public function getIterator()
+    {
         return new \ArrayIterator($this->list);
     }
+
     /**
      * @param array $data
      * @return static
