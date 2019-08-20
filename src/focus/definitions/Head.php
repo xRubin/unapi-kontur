@@ -20,15 +20,13 @@ class Head implements DtoInterface
     /**
      * Head constructor.
      * @param string $fio
-     * @param string $innfl
      * @param string $position
      * @param \DateTimeInterface $date
      * @param \DateTimeInterface $firstDate
      */
-    public function __construct(string $fio, string $innfl, string $position, \DateTimeInterface $date, \DateTimeInterface $firstDate)
+    public function __construct(string $fio, string $position, \DateTimeInterface $date, \DateTimeInterface $firstDate)
     {
         $this->fio = $fio;
-        $this->innfl = $innfl;
         $this->position = $position;
         $this->date = $date;
         $this->firstDate = $firstDate;
@@ -40,14 +38,6 @@ class Head implements DtoInterface
     public function getFio(): string
     {
         return $this->fio;
-    }
-
-    /**
-     * @return string
-     */
-    public function getInnfl(): string
-    {
-        return $this->innfl;
     }
 
     /**
@@ -75,17 +65,39 @@ class Head implements DtoInterface
     }
 
     /**
+     * @return string
+     */
+    public function getInnfl(): string
+    {
+        return $this->innfl;
+    }
+
+    /**
+     * @param string $innfl
+     * @return Head
+     */
+    public function setInnfl(string $innfl): Head
+    {
+        $this->innfl = $innfl;
+        return $this;
+    }
+
+    /**
      * @param array $data
      * @return static
      */
     public static function toDto(array $data): DtoInterface
     {
-        return new self(
+        $result = new self(
             (string)$data['fio'],
-            (string)$data['innfl'],
             (string)$data['position'],
             \DateTimeImmutable::createFromFormat('Y-m-d', $data['date']),
             \DateTimeImmutable::createFromFormat('Y-m-d', $data['firstDate'])
         );
+
+        if (array_key_exists('innfl', $data))
+            $result->setInnfl($data['innfl']);
+
+        return $result;
     }
 }
