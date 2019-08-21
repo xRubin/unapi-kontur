@@ -8,7 +8,7 @@ class Head implements DtoInterface
 {
     /** @var string */
     private $fio;
-    /** @var string */
+    /** @var string|null */
     private $innfl;
     /** @var string */
     private $position;
@@ -65,18 +65,18 @@ class Head implements DtoInterface
     }
 
     /**
-     * @return string
+     * @return null|string
      */
-    public function getInnfl(): string
+    public function getInnfl(): ?string
     {
         return $this->innfl;
     }
 
     /**
-     * @param string $innfl
+     * @param null|string $innfl
      * @return Head
      */
-    public function setInnfl(string $innfl): Head
+    public function setInnfl(?string $innfl): Head
     {
         $this->innfl = $innfl;
         return $this;
