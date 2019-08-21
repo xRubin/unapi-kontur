@@ -12,4 +12,10 @@ interface ParserInterface
      * @return PromiseInterface
      */
     public function parseReqResponse(ResponseInterface $response): PromiseInterface;
+
+    /**
+     * @param ResponseInterface $response
+     * @return PromiseInterface
+     */
+    public function parseEgrDetailsResponse(ResponseInterface $response): PromiseInterface;
 }

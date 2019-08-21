@@ -8,12 +8,8 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\MockHandler;
 use GuzzleHttp\Psr7\Response;
 
-use unapi\kontur\focus\ {
-    Client,
-    Credentials,
-    Service,
-    responses,
-    objects\Requisites
+use unapi\kontur\focus\{
+    Client, Credentials, requests, Service
 };
 
 class ServiceTest extends TestCase
@@ -26,24 +22,62 @@ class ServiceTest extends TestCase
         ]);
     }
 
-    public function testApiKeys()
+    /**
+     * @param $inn
+     * @dataProvider innProvider
+     */
+    public function testRequestReq($inn)
     {
         $service = $this->getService(
             HandlerStack::create(
                 new MockHandler([
-                    new Response(200, [], file_get_contents(__DIR__ . '/responses/7736050003.json')),
+                    new Response(200, [], file_get_contents(__DIR__ . '/responses/req/' . $inn . '.json')),
                 ])
             )
         );
 
-        /** @var responses\ReqResponseInterface $result */
-        $result = $service->req('7736050003')->wait();
+        /** @var requests\req\ResponseInterface $result */
+        $result = $service->req($inn)->wait();
 
-        $this->assertInstanceOf(responses\ReqResponseInterface::class, $result);
+        $this->assertInstanceOf(requests\req\ResponseInterface::class, $result);
 
         foreach ($result as $requisites) {
-            $this->assertInstanceOf(Requisites::class, $requisites);
-            /** @var Requisites $requisites */
+            $this->assertInstanceOf(requests\req\structures\Requisites::class, $requisites);
+            /** @var requests\req\structures\Requisites $requisites */
         }
+    }
+
+    /**
+     * @param $inn
+     * @dataProvider innProvider
+     */
+    public function testRequestEgrDetails($inn)
+    {
+        $service = $this->getService(
+            HandlerStack::create(
+                new MockHandler([
+                    new Response(200, [], file_get_contents(__DIR__ . '/responses/egrDetails/' . $inn . '.json')),
+                ])
+            )
+        );
+
+        /** @var requests\egrDetails\ResponseInterface $result */
+        $result = $service->egrDetails($inn)->wait();
+
+        $this->assertInstanceOf(requests\egrDetails\ResponseInterface::class, $result);
+
+        foreach ($result as $requisites) {
+            $this->assertInstanceOf(requests\egrDetails\structures\EgrDetails::class, $requisites);
+            /** @var requests\egrDetails\structures\EgrDetails $requisites */
+        }
+    }
+
+    public function innProvider()
+    {
+        return [
+            ['7736050003'],
+            ['6663003127'],
+            ['3245001416'],
+        ];
     }
 }

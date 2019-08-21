@@ -111,4 +111,22 @@ class Service implements ServiceInterface, LoggerAwareInterface
             return $this->parser->parseReqResponse($response);
         });
     }
+
+    /**
+     * @param string|null $inn
+     * @param string|null $ogrn
+     * @return PromiseInterface
+     */
+    public function egrDetails(string $inn = null, string $ogrn = null): PromiseInterface
+    {
+        return $this->getClient()->requestAsync('GET', '/api3/egrDetails', [
+            'query' => [
+                'key' => $this->getCredentials()->getKey(),
+                'inn' => $inn,
+                'ogrn' => $ogrn,
+            ],
+        ])->then(function (ResponseInterface $response) {
+            return $this->parser->parseEgrDetailsResponse($response);
+        });
+    }
 }
