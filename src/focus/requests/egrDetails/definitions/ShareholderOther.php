@@ -130,5 +130,7 @@ class ShareholderOther implements DtoInterface
 
         if (array_key_exists('date', $data))
             $result->setDate(Date::convert($data['date']));
+
+        return $result;
     }
 }
