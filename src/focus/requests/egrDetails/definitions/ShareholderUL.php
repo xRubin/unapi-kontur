@@ -6,88 +6,127 @@ use unapi\interfaces\DtoInterface;
 
 class ShareholderUL implements DtoInterface
 {
-    /** @var string */
+    /** @var string|null */
     private $ogrn;
-    /** @var string */
+    /** @var string|null */
     private $inn;
-    /** @var string */
+    /** @var string|null */
     private $fullName;
-    /** @var string */
+    /** @var string|null */
     private $address;
-    /** @var float */
+    /** @var float|null */
     private $votingSharesPercent;
-    /** @var float */
+    /** @var float|null */
     private $capitalSharesPercent;
     /** @var \DateTimeImmutable|null */
     private $date;
 
     /**
-     * ShareholderUL constructor.
-     * @param string $ogrn
-     * @param string $inn
-     * @param string $fullName
-     * @param string $address
-     * @param float $votingSharesPercent
-     * @param float $capitalSharesPercent
-     * @param \DateTimeImmutable|null $date
+     * @return null|string
      */
-    public function __construct(string $ogrn, string $inn, string $fullName, string $address, float $votingSharesPercent, float $capitalSharesPercent, ?\DateTimeImmutable $date)
-    {
-        $this->ogrn = $ogrn;
-        $this->inn = $inn;
-        $this->fullName = $fullName;
-        $this->address = $address;
-        $this->votingSharesPercent = $votingSharesPercent;
-        $this->capitalSharesPercent = $capitalSharesPercent;
-        $this->date = $date;
-    }
-
-    /**
-     * @return string
-     */
-    public function getOgrn(): string
+    public function getOgrn(): ?string
     {
         return $this->ogrn;
     }
 
     /**
-     * @return string
+     * @param null|string $ogrn
+     * @return ShareholderUL
      */
-    public function getInn(): string
+    public function setOgrn(?string $ogrn): ShareholderUL
+    {
+        $this->ogrn = $ogrn;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getInn(): ?string
     {
         return $this->inn;
     }
 
     /**
-     * @return string
+     * @param null|string $inn
+     * @return ShareholderUL
      */
-    public function getFullName(): string
+    public function setInn(?string $inn): ShareholderUL
+    {
+        $this->inn = $inn;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }
 
     /**
-     * @return string
+     * @param null|string $fullName
+     * @return ShareholderUL
      */
-    public function getAddress(): string
+    public function setFullName(?string $fullName): ShareholderUL
+    {
+        $this->fullName = $fullName;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
     /**
-     * @return float
+     * @param null|string $address
+     * @return ShareholderUL
      */
-    public function getVotingSharesPercent(): float
+    public function setAddress(?string $address): ShareholderUL
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getVotingSharesPercent(): ?float
     {
         return $this->votingSharesPercent;
     }
 
     /**
-     * @return float
+     * @param float|null $votingSharesPercent
+     * @return ShareholderUL
      */
-    public function getCapitalSharesPercent(): float
+    public function setVotingSharesPercent(?float $votingSharesPercent): ShareholderUL
+    {
+        $this->votingSharesPercent = $votingSharesPercent;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getCapitalSharesPercent(): ?float
     {
         return $this->capitalSharesPercent;
+    }
+
+    /**
+     * @param float|null $capitalSharesPercent
+     * @return ShareholderUL
+     */
+    public function setCapitalSharesPercent(?float $capitalSharesPercent): ShareholderUL
+    {
+        $this->capitalSharesPercent = $capitalSharesPercent;
+        return $this;
     }
 
     /**
@@ -99,19 +138,44 @@ class ShareholderUL implements DtoInterface
     }
 
     /**
+     * @param \DateTimeImmutable|null $date
+     * @return ShareholderUL
+     */
+    public function setDate(?\DateTimeImmutable $date): ShareholderUL
+    {
+        $this->date = $date;
+        return $this;
+    }
+
+    /**
      * @param array $data
      * @return static
      */
     public static function toDto(array $data): DtoInterface
     {
-        return new self(
-            (string)$data['ogrn'],
-            (string)$data['inn'],
-            (string)$data['fullName'],
-            (string)$data['address'],
-            (float)$data['votingSharesPercent'],
-            (float)$data['capitalSharesPercent'],
-            Date::convert($data['date'])
-        );
+        $result = new self();
+
+        if (array_key_exists('ogrn', $data))
+            $result->setOgrn((string)$data['ogrn']);
+
+        if (array_key_exists('inn', $data))
+            $result->setInn((string)$data['inn']);
+
+        if (array_key_exists('fullName', $data))
+            $result->setFullName((string)$data['fullName']);
+
+        if (array_key_exists('address', $data))
+            $result->setAddress((string)$data['address']);
+
+        if (array_key_exists('votingSharesPercent', $data))
+            $result->setVotingSharesPercent((float)$data['votingSharesPercent']);
+
+        if (array_key_exists('capitalSharesPercent', $data))
+            $result->setCapitalSharesPercent((float)$data['capitalSharesPercent']);
+
+        if (array_key_exists('date', $data))
+            $result->setDate(Date::convert($data['date']));
+
+        return $result;
     }
 }

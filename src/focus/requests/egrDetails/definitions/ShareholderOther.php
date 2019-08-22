@@ -6,64 +6,87 @@ use unapi\interfaces\DtoInterface;
 
 class ShareholderOther implements DtoInterface
 {
-    /** @var string */
+    /** @var string|null */
     private $fullName;
-    /** @var string */
+    /** @var string|null */
     private $address;
-    /** @var float */
+    /** @var float|null */
     private $votingSharesPercent;
-    /** @var float */
+    /** @var float|null */
     private $capitalSharesPercent;
     /** @var \DateTimeImmutable|null */
     private $date;
 
     /**
-     * ShareholderOther constructor.
-     * @param string $fullName
-     * @param string $address
-     * @param float $votingSharesPercent
-     * @param float $capitalSharesPercent
-     * @param \DateTimeImmutable|null $date
+     * @return null|string
      */
-    public function __construct(string $fullName, string $address, float $votingSharesPercent, float $capitalSharesPercent, ?\DateTimeImmutable $date)
-    {
-        $this->fullName = $fullName;
-        $this->address = $address;
-        $this->votingSharesPercent = $votingSharesPercent;
-        $this->capitalSharesPercent = $capitalSharesPercent;
-        $this->date = $date;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFullName(): string
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }
 
     /**
-     * @return string
+     * @param null|string $fullName
+     * @return ShareholderOther
      */
-    public function getAddress(): string
+    public function setFullName(?string $fullName): ShareholderOther
+    {
+        $this->fullName = $fullName;
+        return $this;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getAddress(): ?string
     {
         return $this->address;
     }
 
     /**
-     * @return float
+     * @param null|string $address
+     * @return ShareholderOther
      */
-    public function getVotingSharesPercent(): float
+    public function setAddress(?string $address): ShareholderOther
+    {
+        $this->address = $address;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getVotingSharesPercent(): ?float
     {
         return $this->votingSharesPercent;
     }
 
     /**
-     * @return float
+     * @param float|null $votingSharesPercent
+     * @return ShareholderOther
      */
-    public function getCapitalSharesPercent(): float
+    public function setVotingSharesPercent(?float $votingSharesPercent): ShareholderOther
+    {
+        $this->votingSharesPercent = $votingSharesPercent;
+        return $this;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getCapitalSharesPercent(): ?float
     {
         return $this->capitalSharesPercent;
+    }
+
+    /**
+     * @param float|null $capitalSharesPercent
+     * @return ShareholderOther
+     */
+    public function setCapitalSharesPercent(?float $capitalSharesPercent): ShareholderOther
+    {
+        $this->capitalSharesPercent = $capitalSharesPercent;
+        return $this;
     }
 
     /**
@@ -75,17 +98,37 @@ class ShareholderOther implements DtoInterface
     }
 
     /**
+     * @param \DateTimeImmutable|null $date
+     * @return ShareholderOther
+     */
+    public function setDate(?\DateTimeImmutable $date): ShareholderOther
+    {
+        $this->date = $date;
+        return $this;
+    }
+
+
+    /**
      * @param array $data
      * @return static
      */
     public static function toDto(array $data): DtoInterface
     {
-        return new self(
-            (string)$data['fullName'],
-            (string)$data['address'],
-            (float)$data['votingSharesPercent'],
-            (float)$data['capitalSharesPercent'],
-            Date::convert($data['date'])
-        );
+        $result = new self();
+
+        if (array_key_exists('fullName', $data))
+            $result->setFullName((string)$data['fullName']);
+
+        if (array_key_exists('address', $data))
+            $result->setAddress((string)$data['address']);
+
+        if (array_key_exists('votingSharesPercent', $data))
+            $result->setVotingSharesPercent((float)$data['votingSharesPercent']);
+
+        if (array_key_exists('capitalSharesPercent', $data))
+            $result->setCapitalSharesPercent((float)$data['capitalSharesPercent']);
+
+        if (array_key_exists('date', $data))
+            $result->setDate(Date::convert($data['date']));
     }
 }
