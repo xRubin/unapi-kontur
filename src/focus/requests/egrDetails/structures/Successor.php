@@ -73,7 +73,7 @@ class Successor implements DtoInterface
             (string)$data['name'],
             (string)$data['inn'],
             (string)$data['ogrn'],
-            Date::convert($data['date'])
+            Date::convert($data['date'] ?? null)
         );
     }
 }

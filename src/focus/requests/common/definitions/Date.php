@@ -10,6 +10,9 @@ class Date
 
     public static function convert(?string $value): ?\DateTimeImmutable
     {
+        if (null === $value)
+            return null;
+
         $result = DateTimeImmutable::createFromFormat(self::FORMAT, $value);
 
         $errors = DateTimeImmutable::getLastErrors();
